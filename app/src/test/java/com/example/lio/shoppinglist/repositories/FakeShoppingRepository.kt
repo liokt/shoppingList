@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.lio.shoppinglist.data.local.ShoppingItem
 import com.example.lio.shoppinglist.data.remote.responses.ImageResponse
-import com.example.lio.shoppinglist.di.other.Resource
+import com.example.lio.shoppinglist.other.Resource
 
 //This is necessary to test our viewmodel class
 class FakeShoppingRepository: ShoppingRepository {

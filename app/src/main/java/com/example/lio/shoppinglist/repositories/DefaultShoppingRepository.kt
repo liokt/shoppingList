@@ -5,7 +5,7 @@ import com.example.lio.shoppinglist.data.local.ShoppingDao
 import com.example.lio.shoppinglist.data.local.ShoppingItem
 import com.example.lio.shoppinglist.data.remote.responses.ImageResponse
 import com.example.lio.shoppinglist.data.remote.responses.PixebayAPI
-import com.example.lio.shoppinglist.di.other.Resource
+import com.example.lio.shoppinglist.other.Resource
 import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
