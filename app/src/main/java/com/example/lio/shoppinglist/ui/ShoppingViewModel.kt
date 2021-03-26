@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lio.shoppinglist.data.local.ShoppingItem
 import com.example.lio.shoppinglist.data.remote.responses.ImageResponse
+import com.example.lio.shoppinglist.other.Constants
 import com.example.lio.shoppinglist.other.Event
 import com.example.lio.shoppinglist.other.Resource
 import com.example.lio.shoppinglist.repositories.ShoppingRepository
@@ -41,11 +42,36 @@ class ShoppingViewModel @ViewModelInject constructor(
     }
 
     fun insertShoppingItem(name: String, amountString: String, priceString: String){
-
+        if(name.isEmpty() || amountString.isEmpty() || priceString.isEmpty()){
+            _insertShoppingStatus.postValue(Event(Resource.error("the fields must not be empty", null)))
+            return
+        }
+        if(priceString.length > Constants.MAX_PRICE_LENGTH){
+            _insertShoppingStatus.postValue(Event(Resource.error("The price of the item" +
+                    "must not exceed ${Constants.MAX_PRICE_LENGTH} characters", null)))
+            return
+        }
+        val amount = try {
+            amountString.toInt()
+        } catch (e: Exception){
+            _insertShoppingStatus.postValue(Event(Resource.error("Please enter a valid amount", null)))
+            return
+        }
+        val shoppingItem = ShoppingItem(name, amount, priceString.toFloat(), _curlImageUrl.value ?: "")
+        insertShoppingItemIntoDb(shoppingItem)
+        setCurrentImageUrl("")
+        _insertShoppingStatus.postValue(Event(Resource.success(shoppingItem)))
     }
 
     fun searchForImage(imageQuery: String){
-
+        if(imageQuery.isEmpty()) {
+            return
+        }
+        _images.value = Event(Resource.loading(null))
+        viewModelScope.launch {
+            val response = repository.searchForImage(imageQuery)
+            _images.value = Event(response)
+        }
     }
 
 
