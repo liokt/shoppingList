@@ -47,7 +47,7 @@ object AppModule {
     fun providePixabayApi(): PixebayAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl( "https://pixabay.com")
             .build()
             .create(PixebayAPI::class.java)
     }

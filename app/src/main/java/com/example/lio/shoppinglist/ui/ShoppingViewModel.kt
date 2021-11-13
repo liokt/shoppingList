@@ -11,9 +11,12 @@ import com.example.lio.shoppinglist.other.Constants
 import com.example.lio.shoppinglist.other.Event
 import com.example.lio.shoppinglist.other.Resource
 import com.example.lio.shoppinglist.repositories.ShoppingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ShoppingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ShoppingViewModel @Inject constructor(
     private val repository: ShoppingRepository
 ): ViewModel() {
 
